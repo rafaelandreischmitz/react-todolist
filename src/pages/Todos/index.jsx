@@ -1,5 +1,15 @@
 import React, {useState} from 'react';
 import {Todoscontainer} from './style';
+import {GlobalStyle} from './style';
+import {ExclamationCircle} from '@styled-icons/bootstrap/ExclamationCircle';
+import {Edit} from '@styled-icons/boxicons-regular/Edit';
+import {DeleteForever} from '@styled-icons/material/DeleteForever';
+import {CloseOutline} from '@styled-icons/evaicons-outline/CloseOutline';
+
+const hurry = <ExclamationCircle />;
+const edit = <Edit />;
+const trash = <DeleteForever />;
+const close = <CloseOutline />
 
 export default function Todos(){
     const [todos, setTodos] = useState([]);
@@ -20,7 +30,7 @@ export default function Todos(){
 
         if(status === ''){
             alert('O status da tarefa não pode ser vazio');
-            return;
+            return
         }
 
         const newTodo = {name: name, status: status}
@@ -59,20 +69,39 @@ export default function Todos(){
         oldTodos[todoEditing].status = status;
 
         setTodos(oldTodos);
+
+        let modalClose = document.getElementsByClassName('closeModal')[0];
+        
+        modalClose.click();
     }
 
     return( <Todoscontainer>
-                <ul>
+                <GlobalStyle />
+                <ul className='list'>
                     {
                         todos.map((todo, index)=>{
                             return(
                                 <li key={index}>
-                                    <strong>
-                                        {
-                                            renderStatus(todo.status)
-                                        }
-                                    </strong>
-                                    <a onClick={()=>setTodoEditing(index)}>{todo.name}</a> <button onClick={()=>handleDelete(index)}>X</button>
+                                    <div>
+                                        <strong value={renderStatus(todo.status)}>
+                                            {
+                                                renderStatus(todo.status)
+                                            }
+                                            
+                                            {renderStatus(todo.status)=='A fazer'&&
+                                                <div>{hurry}</div>
+                                            }
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <a>{todo.name}</a> 
+                                    </div>
+
+                                    <div>
+                                        <button onClick={()=>setTodoEditing(index)}>{edit}</button>
+                                        <button onClick={()=>handleDelete(index)}>{trash}</button>
+                                    </div>
                                 </li>    
                             );
                         })
@@ -80,33 +109,58 @@ export default function Todos(){
                 </ul>
 
                 <form name='createTodos' onSubmit={handleSubmit}>
-                    <input type='text' name='name' placeholder='Nome da tarefa'/>
-                    <select name='status' placeholder='Status da tarefa'>
-                        <option defaultValue=''>Selecione o status</option>
-                        <option value='0'>A fazer</option>
-                        <option value='1'>Fazendo</option>
-                        <option value='2'>Finalizada</option>
-                    </select>
-                    <button type='submit'>ADD</button>
+                    <div>
+                        <label>Nome da tarefa</label>
+                        <input type='text' name='name' />
+                    </div>
+                    <div>
+                        <label>Status da tarefa</label>
+                        <select name='status'>
+                            <option defaultValue=''></option>
+                            <option value='0'>A fazer</option>
+                            <option value='1'>Fazendo</option>
+                            <option value='2'>Finalizada</option>
+                        </select>
+                    </div>
+
+                    <nav className='navButtons'>
+                        <ul>
+                            <button type='submit'>Adicionar
+                                <span></span><span></span><span></span><span></span>
+                            </button>
+                        </ul>
+                    </nav>
                 </form>
 
                 {todoEditing!=null&&
-                    <div>
-                        <h2>
-                            Nome da tarefa: {todos[todoEditing].name}
-                        </h2>
+                    <div name='changeStatusModal' className='changeStatusModal'>
+                        <div name='changeStatusDiv' className='changeStatusDiv'>
+                            <button className='closeModal' onClick={()=>setTodoEditing(null)}>{close}</button>
 
-                        <label>Mudar o status</label>
+                            <div className='modalForm'>
+                                <h2>
+                                    {todos[todoEditing].name}
+                                </h2>
 
-                        <form name='editStatus' onSubmit={handleSubmitStatus}>
-                            <select name='status' placeholder='Status da tarefa'>
-                                <option selected={todos[todoEditing].status=='0'} value='0'>A fazer</option>
-                                <option selected={todos[todoEditing].status=='1'} value='1'>Fazendo</option>
-                                <option selected={todos[todoEditing].status=='2'} value='2'>Finalizada</option>
-                            </select>
-                            <button type='submit'>SALVAR</button>
-                        </form>
-                        <button onClick={()=>setTodoEditing(null)}>FECHAR</button>
+                                <form name='editStatus' onSubmit={handleSubmitStatus}>
+                                    <div className='inputForm'>
+                                        <label>Status</label>
+                                        <select name='status'>
+                                            <option selected={todos[todoEditing].status=='0'} value='0'>A fazer</option>
+                                            <option selected={todos[todoEditing].status=='1'} value='1'>Fazendo</option>
+                                            <option selected={todos[todoEditing].status=='2'} value='2'>Finalizada</option>
+                                        </select>
+                                    </div>
+                                    <nav className='navButtons'>
+                                        <ul>
+                                            <button type='submit'>Salvar
+                                                <span></span><span></span><span></span><span></span>
+                                            </button>
+                                        </ul>
+                                    </nav>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 }
             </Todoscontainer> );
