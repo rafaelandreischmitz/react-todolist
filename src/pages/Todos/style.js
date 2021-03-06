@@ -2,21 +2,16 @@ import styled from 'styled-components';
 import {createGlobalStyle} from 'styled-components';
 
 const primaryColor = '#F2BF2F';
-const secondaryColor = '#444';
 const darkColor = '#171717';
 const blackColor = '#000';
 const whiteColor = '#fff';
 const placeholderColor = '#999';
-const defaultFont = 'Montserrat';
+const defaultFont = 'Montserrat, sans-serif';
 
-const screenSm = '576px';
 const screenMd = '768px';
 
-// span.onclick = function() {
-//     modal.style.display = "none";
-// }
-
 export const GlobalStyle = createGlobalStyle`
+    @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
     body{
         background-color: ${darkColor};
         padding: 0;
@@ -26,6 +21,11 @@ export const GlobalStyle = createGlobalStyle`
         align-items: center;
         height: 100vh;
         width: 100%;
+    }
+
+    ::selection {
+        background-color: ${darkColor};
+        color: ${primaryColor};
     }
 
     #root{
@@ -44,13 +44,79 @@ export const GlobalStyle = createGlobalStyle`
             padding: 0 1rem;
         }
     }
-`
 
-export const Todoscontainer = styled.div `
-    @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+    button{
+        outline: none;
+        user-select: none;
+    }
 
-    align-items: center;
-    flex-direction: column;
+    .navButtons{
+        display: flex;
+        justify-content: center;
+
+        ul{
+            padding: 0;
+            margin: 0;
+
+            button{
+                outline: none;
+                user-select: none;
+                cursor: pointer;
+                justify-content: center;
+                display: flex;
+                color: ${darkColor};
+                font-weight: 600;
+                border: none;
+                border-radius: 25px;
+                font-size: 1rem;
+                padding: 0.7rem 1rem;
+                text-transform: uppercase;
+                position: relative;
+                overflow: hidden;
+                z-index: 1;
+                transition: 0.4s;
+                background-color: ${whiteColor};
+
+                @media(min-width: ${screenMd}){
+                    &:hover{
+                        color: ${whiteColor};
+                        padding: 0.7rem 1.6rem;
+
+                        span{
+                            transform: translateY(-40%) scale(2);
+                        }
+                    }
+
+                    span{
+                        position: absolute;
+                        width: 25%;
+                        height: 100%;
+                        background-color: ${primaryColor};
+                        transform: translateY(150%);
+                        border-radius: 50%;
+                        left: calc((var(--n) - 1) * 25%);
+                        transition: 0.4s;
+                        transition-delay: calc((var(--n) - 1) * 0.1s);
+                        z-index: -1;
+                        --n: 1;
+
+                        &:nth-child(2){
+                            --n: 2;
+                        }
+                        
+                        &:nth-child(3){
+                            --n: 3;
+                        }
+
+                        &:nth-child(4){
+                            --n: 4;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     form{
         width: 20%;
@@ -62,12 +128,17 @@ export const Todoscontainer = styled.div `
         div{
             justify-content: flex-start!important;
         }
+
+        .formButton{
+            margin-top: 1rem
+        }
     }
 
     label{
         position: absolute;
         margin-top: -9px;
         margin-left: 8px;
+        font-family: ${defaultFont};
         background-color: ${darkColor};
         color: ${primaryColor};
         padding: 0 5px;
@@ -87,6 +158,7 @@ export const Todoscontainer = styled.div `
         color: ${whiteColor};
         outline: none;
         width: 100%;
+        transition: 0.4s;
 
         &:-webkit-autofill,
         &:-webkit-autofill:hover, 
@@ -103,18 +175,37 @@ export const Todoscontainer = styled.div `
         &::placeholder{
             color: ${placeholderColor};
         }
+
+        &:hover,
+        &:focus{
+            box-shadow: 6px 0 0 0 ${primaryColor};
+            transition: 0.4s;
+        }
     }
 
     div{
         width: 100%;
     }
 
+    .title{
+        font-family: ${defaultFont};
+        text-transform: uppercase;
+        color: ${primaryColor};
+        font-weight: 600;
+        margin-bottom: 1rem;
+
+        h1{
+            margin: 0;
+        }
+    }
+
 
     .list{
         list-style: none;
         padding: 0;
-        margin: 0 0 2rem 0;
+        margin: 0;
         width: 50%;
+        
         li{
             display: flex;
             justify-content: space-between;
@@ -223,6 +314,53 @@ export const Todoscontainer = styled.div `
         }
     }
 
+    @media(max-width: ${screenMd}){
+        form{
+            width: 75%;
+        }
+
+        .list{
+            width: 100%;
+
+            li{
+                flex-direction: column;
+
+                div{
+                    width: 100%!important;
+                    justify-content: center!important;
+                    align-items: center!important;
+
+                    &:first-child, &:nth-child(2), &:nth-child(3){
+                        width: 100%;
+                        justify-content: center!important;
+                        align-items: center!important;
+                    }
+                    
+                    &:nth-child(2){
+                        margin: 1rem 0;
+                        width: 100%!important;
+                    }
+                
+                    button{
+                        padding: 0.5rem 0;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+    }
+`
+
+export const Todoscontainer = styled.div `
+    @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+
+    align-items: center;
+    flex-direction: column;
+
+    .createTodos{
+        margin-top: 2rem;
+    }
+
     .changeStatusModal{
         position: fixed;
         z-index: 9999;
@@ -232,8 +370,7 @@ export const Todoscontainer = styled.div `
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0,0,0,0.75);
 
         .changeStatusDiv{
             width: 50%!important;
@@ -312,107 +449,7 @@ export const Todoscontainer = styled.div `
         }
     }
 
-    .navButtons{
-        display: flex;
-        justify-content: center;
-
-        ul{
-            padding: 0;
-            margin: 0;
-
-            button{
-                outline: none;
-                user-select: none;
-                cursor: pointer;
-                justify-content: center;
-                display: flex;
-                color: ${darkColor};
-                font-weight: 600;
-                border: none;
-                border-radius: 25px;
-                font-size: 1rem;
-                padding: 0.7rem 1rem;
-                text-transform: uppercase;
-                position: relative;
-                overflow: hidden;
-                z-index: 1;
-                transition: 0.4s;
-                background-color: ${whiteColor};
-
-                @media(min-width: ${screenMd}){
-                    &:hover{
-                        color: ${whiteColor};
-                        padding: 0.7rem 1.6rem;
-
-                        span{
-                            transform: translateY(-40%) scale(2);
-                        }
-                    }
-
-                    span{
-                        position: absolute;
-                        width: 25%;
-                        height: 100%;
-                        background-color: ${primaryColor};
-                        transform: translateY(150%);
-                        border-radius: 50%;
-                        left: calc((var(--n) - 1) * 25%);
-                        transition: 0.4s;
-                        transition-delay: calc((var(--n) - 1) * 0.1s);
-                        z-index: -1;
-                        --n: 1;
-
-                        &:nth-child(2){
-                            --n: 2;
-                        }
-                        
-                        &:nth-child(3){
-                            --n: 3;
-                        }
-
-                        &:nth-child(4){
-                            --n: 4;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     @media(max-width: ${screenMd}){
-        .list{
-            width: 100%;
-
-            li{
-                flex-direction: column;
-
-                div{
-                    width: 100%!important;
-                    justify-content: center!important;
-                    align-items: center!important;
-
-                    &:first-child, &:nth-child(2), &:nth-child(3){
-                        width: 100%;
-                        justify-content: center!important;
-                        align-items: center!important;
-                    }
-                    
-                    &:nth-child(2){
-                        margin: 1rem 0;
-                        width: 100%!important;
-                    }
-                
-                    button{
-                        padding: 0.5rem 0;
-                        width: 50%;
-                    }
-                }
-            }
-        }
-        form{
-            width: 75%;
-        }
-
         .changeStatusModal .changeStatusDiv{
             width: 100%!important;
 

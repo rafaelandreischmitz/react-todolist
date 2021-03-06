@@ -24,12 +24,12 @@ export default function Todos(){
         const status = form.status.value;
 
         if(name === ''){
-            alert('O nome da tarefa não pode ser vazio');
+            alert('O nome da tarefa deve ser preenchido.');
             return;
         }
 
         if(status === ''){
-            alert('O status da tarefa não pode ser vazio');
+            alert('O status da tarefa deve ser selecionado');
             return
         }
 
@@ -77,6 +77,9 @@ export default function Todos(){
 
     return( <Todoscontainer>
                 <GlobalStyle />
+                <div class='title'>
+                    <h1>Tarefas</h1>
+                </div>
                 <ul className='list'>
                     {
                         todos.map((todo, index)=>{
@@ -108,7 +111,7 @@ export default function Todos(){
                     }
                 </ul>
 
-                <form name='createTodos' onSubmit={handleSubmit}>
+                <form name='createTodos' className='createTodos' onSubmit={handleSubmit}>
                     <div>
                         <label>Nome da tarefa</label>
                         <input type='text' name='name' />
@@ -123,7 +126,7 @@ export default function Todos(){
                         </select>
                     </div>
 
-                    <nav className='navButtons'>
+                    <nav className='navButtons formButton'>
                         <ul>
                             <button type='submit'>Adicionar
                                 <span></span><span></span><span></span><span></span>
