@@ -1,15 +1,20 @@
 import React, {useState} from 'react';
 import {Todoscontainer} from './style';
+import { Link } from 'react-router-dom';
 import {GlobalStyle} from './style';
 import {ExclamationCircle} from '@styled-icons/bootstrap/ExclamationCircle';
 import {Edit} from '@styled-icons/boxicons-regular/Edit';
 import {DeleteForever} from '@styled-icons/material/DeleteForever';
 import {CloseOutline} from '@styled-icons/evaicons-outline/CloseOutline';
+import {User} from '@styled-icons/boxicons-regular/User';
+import {Logout} from '@styled-icons/material-outlined/Logout';
 
 const hurry = <ExclamationCircle />;
 const edit = <Edit />;
 const trash = <DeleteForever />;
-const close = <CloseOutline />
+const close = <CloseOutline />;
+const userIcon = <User />;
+const logout = <Logout />;
 
 export default function Todos(){
     const [todos, setTodos] = useState([]);
@@ -133,7 +138,14 @@ export default function Todos(){
                             </button>
                         </ul>
                     </nav>
+                    
+                    {localStorage.getItem('user')==='admin'&&
+                        <Link className='anotherPageLink' to="/users">{userIcon} Usuários</Link>
+                    }
+                    <Link className='anotherPageLink' to="/">{logout} Log out</Link>
                 </form>
+
+                
 
                 {todoEditing!=null&&
                     <div name='changeStatusModal' className='changeStatusModal'>

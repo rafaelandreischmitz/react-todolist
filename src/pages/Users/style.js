@@ -25,7 +25,10 @@ export const Userscontainer = styled.div `
         }
     }
     #__lpform_user, #__lpform_password{
-        display: none;
+        display: none!important;
+        visibility: hidden!important;
+        width: 0!important;
+        height: 0!important;
     }
     .editUserModal{
         position: fixed;

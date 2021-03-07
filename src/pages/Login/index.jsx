@@ -4,6 +4,7 @@ import {Logincontainer} from './style';
 import {GlobalStyle} from '../Todos/style';
 
 export default function Login(){
+    localStorage.setItem('user', '');
     let history = useHistory();
 
     const users = [
@@ -11,7 +12,7 @@ export default function Login(){
             user: 'admin', password: 'admin123'
         },
         {
-            user: 'suporte', password: 'suporte123'
+            user: 'usuario', password: 'usuario123'
         }
     ]
 
@@ -47,6 +48,7 @@ export default function Login(){
             return
         }
 
+        localStorage.setItem('user', user);
         history.push('/todos');
 
     }

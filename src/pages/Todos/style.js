@@ -45,6 +45,28 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
+    .anotherPageLink{
+        text-decoration: none;
+        color: #fff;
+        margin-top: 2rem;
+        text-transform: uppercase;
+        font-size: 14px;
+        transition: 0.4s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover{
+            color: ${primaryColor};
+            transition: 0.4s;
+        }
+
+        svg{
+            width: 15px;
+            margin-right: 0.25rem;
+        }
+    }
+
     button{
         outline: none;
         user-select: none;
@@ -124,6 +146,7 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        align-items: center;
 
         div{
             justify-content: flex-start!important;
