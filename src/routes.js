@@ -6,8 +6,8 @@ import Users from './pages/Users';
 export default function Routes(){
     return( <BrowserRouter>
                 <Switch>
-                    <Route path="/" exact component={Todos} />
-                    <Route path="/login" exact component={Login} />
+                    <Route path="/todos" exact component={Todos} />
+                    <Route path="/" exact component={Login} />
                     <Route path="/users" exact component={Users} />
                 </Switch>
             </BrowserRouter>

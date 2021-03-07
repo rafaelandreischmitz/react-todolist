@@ -47,7 +47,7 @@ export default function Login(){
             return
         }
 
-        history.push('/');
+        history.push('/todos');
 
     }
 
